@@ -167,7 +167,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+
   }
 
   body {
@@ -196,6 +196,14 @@
  * need to be distinguished from eachother visually.
  */
 @layer utilities {
+
+  .bg-background {
+    background-color: var(--background);
+  }
+
+  .text-foreground {
+    color: var(--foreground);
+  }
 
   /* Hide ugly search cancel button in Chrome until we can style it properly */
   input[type="search"]::-webkit-search-cancel-button {

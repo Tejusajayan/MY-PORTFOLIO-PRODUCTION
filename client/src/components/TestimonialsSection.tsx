@@ -86,7 +86,7 @@ export function TestimonialsSection({ testimonials = [] }: TestimonialsSectionPr
   }, [shouldScroll, testimonials.length]);
 
   return (
-    <section id="testimonials" ref={sectionRef} className="py-24 md:py-32 relative overflow-x-hidden">
+    <section id="testimonials" ref={sectionRef} className="py-24 md:py-32 relative overflow-x-hidden bg-black">
       <div className="max-w-7xl mx-auto px-6">
         <div 
           className={`mb-16 transition-all duration-1000 ${
@@ -94,7 +94,7 @@ export function TestimonialsSection({ testimonials = [] }: TestimonialsSectionPr
           }`}
         >
           <span className="text-sm font-medium text-primary tracking-widest uppercase">Testimonials</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">
             CLIENT FEEDBACK
           </h2>
         </div>

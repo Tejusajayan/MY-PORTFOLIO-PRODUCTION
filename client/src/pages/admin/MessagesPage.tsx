@@ -41,10 +41,10 @@ export default function MessagesPage() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 bg-black">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-display font-bold" data-testid="text-page-title">Messages</h1>
+            <h1 className="text-4xl font-display font-bold text-white" data-testid="text-page-title">Messages</h1>
             <p className="text-muted-foreground mt-2">Contact form submissions</p>
           </div>
           <Badge variant="secondary">

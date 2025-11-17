@@ -17,8 +17,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
-      <Route path="/admin/login" component={LoginPage} />
-      <Route path="/admin">
+      <Route path="/bugobugs/login" component={LoginPage} />
+      <Route path="/bugobugs">
         {(params) =>
           localStorage.getItem("admin_token") ? (
             <DashboardPage {...params} />
@@ -27,7 +27,7 @@ function Router() {
           )
         }
       </Route>
-      <Route path="/admin/projects">
+      <Route path="/bugobugs/projects">
         {(params) =>
           localStorage.getItem("admin_token") ? (
             <ProjectsPage {...params} />
@@ -36,7 +36,7 @@ function Router() {
           )
         }
       </Route>
-      <Route path="/admin/expertise">
+      <Route path="/bugobugs/expertise">
         {(params) =>
           localStorage.getItem("admin_token") ? (
             <ExpertisePage {...params} />
@@ -45,7 +45,7 @@ function Router() {
           )
         }
       </Route>
-      <Route path="/admin/testimonials">
+      <Route path="/bugobugs/testimonials">
         {(params) =>
           localStorage.getItem("admin_token") ? (
             <TestimonialsAdminPage {...params} />
@@ -54,7 +54,7 @@ function Router() {
           )
         }
       </Route>
-      <Route path="/admin/messages">
+      <Route path="/bugobugs/messages">
         {(params) =>
           localStorage.getItem("admin_token") ? (
             <MessagesPage {...params} />
@@ -63,7 +63,7 @@ function Router() {
           )
         }
       </Route>
-      <Route path="/admin/social">
+      <Route path="/bugobugs/social">
         {(params) =>
           localStorage.getItem("admin_token") ? (
             <SocialLinksPage {...params} />

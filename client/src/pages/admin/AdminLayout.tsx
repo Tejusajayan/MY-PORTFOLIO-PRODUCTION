@@ -23,12 +23,12 @@ import {
 import { Button } from "@/components/ui/button";
 
 const menuItems = [
-  { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
-  { title: "Projects", url: "/admin/projects", icon: FolderKanban },
-  { title: "Expertise", url: "/admin/expertise", icon: Award },
-  { title: "Testimonials", url: "/admin/testimonials", icon: MessageSquare },
-  { title: "Messages", url: "/admin/messages", icon: Mail },
-  { title: "Social Links", url: "/admin/social", icon: LinkIcon },
+  { title: "Dashboard", url: "/bugobugs", icon: LayoutDashboard },
+  { title: "Projects", url: "/bugobugs/projects", icon: FolderKanban },
+  { title: "Expertise", url: "/bugobugs/expertise", icon: Award },
+  { title: "Testimonials", url: "/bugobugs/testimonials", icon: MessageSquare },
+  { title: "Messages", url: "/bugobugs/messages", icon: Mail },
+  { title: "Social Links", url: "/bugobugs/social", icon: LinkIcon },
 ];
 
 interface AdminLayoutProps {
@@ -85,7 +85,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           </SidebarContent>
         </Sidebar>
 
-        <main className="flex-1 overflow-auto bg-background">
+        <main className="flex-1 overflow-auto bg-black">
           <div className="p-8">
             {children}
           </div>

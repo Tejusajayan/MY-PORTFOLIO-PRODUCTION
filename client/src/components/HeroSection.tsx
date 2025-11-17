@@ -63,12 +63,12 @@ export function HeroSection({
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-primary" />
           </div>
 
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight text-white">
             <span className="block mb-2">
               HI<span className="inline-block w-8 md:w-12 h-1 bg-foreground mx-2 align-middle" />
               THERE
             </span>
-            <span className="block mb-2">I'M {name}</span>
+            <span className="block mb-2 text-white">I'M {name}</span>
             <span className="block bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 bg-clip-text text-transparent animate-pulse">
               {title}
             </span>

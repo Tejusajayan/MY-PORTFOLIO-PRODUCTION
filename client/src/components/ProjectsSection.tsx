@@ -106,7 +106,7 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
   ];
 
   return (
-    <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden bg-black">
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -125,8 +125,8 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
           }`}
         >
           <span className="text-sm font-medium text-primary tracking-widest uppercase">Portfolio</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
-            SELECTED WORKS
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white text-white">
+            MY WORKS
           </h2>
         </div>
 
@@ -194,9 +194,9 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
 
       {/* Modal for all projects by expertise */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-4xl w-full max-h-[80vh] p-0">
+        <DialogContent className="max-w-4xl w-full max-h-[80vh] p-0 bg-black">
           <div className="p-6 pb-0">
-            <h2 className="text-2xl font-bold mb-4">Projects by Area of Expertise</h2>
+            <h2 className="text-2xl font-bold mb-4 text-white">Projects by Area of Expertise</h2>
             <Tabs
               value={selectedTechfield || (expertiseList[0]?.id ?? "")}
               onValueChange={setSelectedTechfield}

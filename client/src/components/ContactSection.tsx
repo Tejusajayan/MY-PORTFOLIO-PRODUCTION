@@ -62,7 +62,7 @@ export function ContactSection({
   };
 
   return (
-    <section id="contact" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="contact" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden bg-black">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -71,7 +71,7 @@ export function ContactSection({
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black mb-6">
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-black mb-6 text-white">
             LET'S <span className="text-primary">$</span> CREATE<br />
             GREAT THINGS.
           </h2>

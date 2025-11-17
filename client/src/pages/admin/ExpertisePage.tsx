@@ -109,10 +109,10 @@ export default function ExpertisePage() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 bg-black">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-display font-bold" data-testid="text-page-title">Expertise</h1>
+            <h1 className="text-4xl font-display font-bold text-white" data-testid="text-page-title">Expertise</h1>
             <p className="text-muted-foreground mt-2">Manage your skills and expertise areas</p>
           </div>
           <Button
@@ -188,9 +188,9 @@ export default function ExpertisePage() {
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl bg-black">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-white">
               {editingExpertise ? "Edit Expertise" : "Add Expertise"}
             </DialogTitle>
           </DialogHeader>
@@ -202,9 +202,9 @@ export default function ExpertisePage() {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel className="text-white">Title</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-title" />
+                      <Input {...field} data-testid="input-title" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -216,9 +216,9 @@ export default function ExpertisePage() {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel className="text-white">Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} rows={3} data-testid="input-description" />
+                      <Textarea {...field} rows={3} data-testid="input-description" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -230,9 +230,9 @@ export default function ExpertisePage() {
                 name="icon"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Icon (palette, code, rocket, zap)</FormLabel>
+                    <FormLabel className="text-white">Icon (palette, code, rocket, zap)</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-icon" />
+                      <Input {...field} data-testid="input-icon" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -244,13 +244,14 @@ export default function ExpertisePage() {
                 name="skills"
                 render={() => (
                   <FormItem>
-                    <FormLabel>Skills (comma-separated)</FormLabel>
+                    <FormLabel className="text-white">Skills (comma-separated)</FormLabel>
                     <FormControl>
                       <Textarea
                         value={skillsInput}
                         onChange={e => setSkillsInput(e.target.value)}
                         rows={2}
                         data-testid="input-skills"
+                        className="text-white"
                       />
                     </FormControl>
                     <FormMessage />
@@ -263,13 +264,14 @@ export default function ExpertisePage() {
                 name="order"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Order</FormLabel>
+                    <FormLabel className="text-white">Order</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         {...field}
                         onChange={(e) => field.onChange(parseInt(e.target.value))}
                         data-testid="input-order"
+                        className="text-white"
                       />
                     </FormControl>
                     <FormMessage />
@@ -282,6 +284,7 @@ export default function ExpertisePage() {
                   type="button"
                   variant="outline"
                   onClick={() => setIsDialogOpen(false)}
+                  className="text-white"
                 >
                   Cancel
                 </Button>

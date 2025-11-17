@@ -16,7 +16,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[85vh] p-0 overflow-hidden" data-testid="modal-project-details">
+      <DialogContent className="max-w-4xl max-h-[85vh] p-0 overflow-hidden bg-black" data-testid="modal-project-details">
         <ScrollArea className="h-full max-h-[85vh]">
           <div className="relative">
             <div className="aspect-video w-full overflow-hidden bg-card">
@@ -40,7 +40,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
           <div className="p-8">
             <DialogHeader className="mb-6">
-              <DialogTitle className="text-3xl font-display font-bold">
+              <DialogTitle className="text-3xl font-display font-bold text-white">
                 {project.title}
               </DialogTitle>
             </DialogHeader>
@@ -50,7 +50,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-3">
                   Description
                 </h3>
-                <p className="text-base leading-relaxed">
+                <p className="text-base leading-relaxed text-white">
                   {project.description}
                 </p>
               </div>
@@ -64,7 +64,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="text-sm"
+                      className="text-sm text-white"
                     >
                       {tech}
                     </Badge>
@@ -78,7 +78,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 </h3>
                 <ul className="space-y-2">
                   {project.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
+                    <li key={index} className="flex items-start gap-3 text-white">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                       <span className="text-base">{feature}</span>
                     </li>
@@ -91,9 +91,10 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   <Button
                     asChild
                     data-testid="button-view-live"
+                    className="bg-primary text-white"
                   >
                     <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-4 w-4 mr-2" />
+                      <ExternalLink className="h-4 w-4 mr-2 text-white" />
                       View Live Site
                     </a>
                   </Button>
@@ -103,9 +104,10 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                     variant="outline"
                     asChild
                     data-testid="button-view-github"
+                    className="bg-primary text-white"
                   >
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-4 w-4 mr-2" />
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="">
+                      <Github className="h-4 w-4 mr-2 "/>
                       View Code
                     </a>
                   </Button>

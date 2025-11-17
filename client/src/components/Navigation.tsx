@@ -48,7 +48,7 @@ export function Navigation({ socialLinks = [], email }: NavigationProps) {
       >
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" data-testid="link-home">
-            <h1 className="text-xl font-display font-bold tracking-tight cursor-pointer hover-elevate px-2 py-1 rounded-md">
+            <h1 className="text-primary text-xl font-display font-bold tracking-tight cursor-pointer hover-elevate px-2 py-1 rounded-md">
               Tejus
             </h1>
           </Link>

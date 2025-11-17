@@ -44,7 +44,7 @@ export default function LoginPage() {
       if (data?.token) {
         localStorage.setItem("admin_token", data.token);
         toast({ title: "Login successful" });
-        setLocation("/admin");
+        setLocation("/bugobugs");
       } else {
         toast({ title: "Login failed: No token returned", variant: "destructive" });
       }
@@ -80,7 +80,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="min-h-screen flex items-center justify-center bg-black">
       <Card className="w-full max-w-md p-8">
         <h1 className="text-2xl font-bold mb-6 text-center">
           {mode === "login" ? "Admin Login" : "Create Admin Account"}

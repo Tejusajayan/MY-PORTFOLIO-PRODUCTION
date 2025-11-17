@@ -55,7 +55,7 @@ export default function DashboardPage() {
 
   function handleLogout() {
     localStorage.removeItem("admin_token");
-    setLocation("/admin/login");
+    setLocation("/bugobugs/login");
   }
 
   return (

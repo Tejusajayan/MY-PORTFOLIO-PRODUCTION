@@ -33,7 +33,7 @@ export function AboutSection({
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="about" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden bg-black">
       <div className="absolute inset-0 opacity-10">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -54,11 +54,11 @@ export function AboutSection({
           >
             <div className="mb-8">
               <span className="text-sm font-medium text-primary tracking-widest uppercase">About Me</span>
-              <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 mb-6">
+              <h2 className="text-white text-4xl md:text-5xl font-display font-bold mt-4 mb-6 text-white leading-tight">
                 DISCOVER THE<br />
                 <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                   PROFESSIONAL
-                </span><br />
+                </span ><br />
                 JOURNEY OF A<br />
                 TECH SPECIALIST.
               </h2>
@@ -71,12 +71,12 @@ export function AboutSection({
             <div className="flex items-center gap-6 text-sm">
               <div>
                 <span className="text-muted-foreground">Based in</span>
-                <p className="font-medium">{location}</p>
+                <p className="font-medium text-white">{location}</p>
               </div>
               <div className="h-8 w-px bg-border" />
               <div>
                 <span className="text-muted-foreground">Experience</span>
-                <p className="font-medium">4+ Years Of Learning Experience</p>
+                <p className="font-medium text-white">4+ Years Of Learning Experience</p>
               </div>
             </div>
           </div>

@@ -101,10 +101,10 @@ export default function TestimonialsAdminPage() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 bg-black">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-display font-bold" data-testid="text-page-title">Testimonials</h1>
+            <h1 className="text-4xl font-display font-bold text-white" data-testid="text-page-title">Testimonials</h1>
             <p className="text-muted-foreground mt-2">Manage client testimonials</p>
           </div>
           <Button
@@ -180,9 +180,9 @@ export default function TestimonialsAdminPage() {
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl bg-black">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-white">
               {editingTestimonial ? "Edit Testimonial" : "Add Testimonial"}
             </DialogTitle>
           </DialogHeader>
@@ -195,9 +195,9 @@ export default function TestimonialsAdminPage() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel className="text-white">Name</FormLabel>
                       <FormControl>
-                        <Input {...field} data-testid="input-name" />
+                        <Input {...field} data-testid="input-name" className="text-white" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -209,9 +209,9 @@ export default function TestimonialsAdminPage() {
                   name="title"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Title</FormLabel>
+                      <FormLabel className="text-white">Title</FormLabel>
                       <FormControl>
-                        <Input {...field} data-testid="input-title" />
+                        <Input {...field} data-testid="input-title" className="text-white"/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -224,9 +224,9 @@ export default function TestimonialsAdminPage() {
                 name="company"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company</FormLabel>
+                    <FormLabel className="text-white">Company</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-company" />
+                      <Input {...field} data-testid="input-company" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -238,9 +238,9 @@ export default function TestimonialsAdminPage() {
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Content</FormLabel>
+                    <FormLabel className="text-white">Content</FormLabel>
                     <FormControl>
-                      <Textarea {...field} rows={4} data-testid="input-content" />
+                      <Textarea {...field} rows={4} data-testid="input-content" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -252,9 +252,9 @@ export default function TestimonialsAdminPage() {
                 name="avatar"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Avatar URL (optional)</FormLabel>
+                    <FormLabel className="text-white">Avatar URL (optional)</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-avatar" />
+                      <Input {...field} data-testid="input-avatar" className="text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -266,13 +266,14 @@ export default function TestimonialsAdminPage() {
                 name="order"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Order</FormLabel>
+                    <FormLabel className="text-white">Order</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         {...field}
                         onChange={(e) => field.onChange(parseInt(e.target.value))}
                         data-testid="input-order"
+                        className="text-white"
                       />
                     </FormControl>
                     <FormMessage />
@@ -285,6 +286,7 @@ export default function TestimonialsAdminPage() {
                   type="button"
                   variant="outline"
                   onClick={() => setIsDialogOpen(false)}
+                  className="text-white"
                 >
                   Cancel
                 </Button>

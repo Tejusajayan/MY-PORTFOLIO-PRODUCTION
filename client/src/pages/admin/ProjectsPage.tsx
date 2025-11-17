@@ -137,10 +137,10 @@ export default function ProjectsPage() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 bg-black">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-display font-bold" data-testid="text-page-title">Projects</h1>
+            <h1 className="text-4xl font-display font-bold text-white" data-testid="text-page-title">Projects</h1>
             <p className="text-muted-foreground mt-2">Manage your portfolio projects</p>
           </div>
           <Button
@@ -222,9 +222,9 @@ export default function ProjectsPage() {
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-black">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-white">
               {editingProject ? "Edit Project" : "Add Project"}
             </DialogTitle>
           </DialogHeader>
@@ -236,9 +236,9 @@ export default function ProjectsPage() {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel className="text-white">Title</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-title" />
+                      <Input {...field} data-testid="input-title" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -250,9 +250,9 @@ export default function ProjectsPage() {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel className="text-white">Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} rows={3} data-testid="input-description" />
+                      <Textarea {...field} rows={3} data-testid="input-description" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -264,9 +264,9 @@ export default function ProjectsPage() {
                 name="image"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Image URL</FormLabel>
+                    <FormLabel className="text-white">Image URL</FormLabel>
                     <FormControl>
-                      <Input {...field} data-testid="input-image" />
+                      <Input {...field} data-testid="input-image" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -278,13 +278,14 @@ export default function ProjectsPage() {
                 name="techStack"
                 render={() => (
                   <FormItem>
-                    <FormLabel>Tech Stack (comma-separated)</FormLabel>
+                    <FormLabel className="text-white">Tech Stack (comma-separated)</FormLabel>
                     <FormControl>
                       <Input
                         value={techStackInput}
                         onChange={e => setTechStackInput(e.target.value)}
                         placeholder="e.g. React, Tailwind CSS, Node.js"
                         data-testid="input-tech-stack"
+                        className="text-white"
                       />
                     </FormControl>
                     <FormMessage />
@@ -297,7 +298,7 @@ export default function ProjectsPage() {
                 name="features"
                 render={() => (
                   <FormItem>
-                    <FormLabel>Features (comma-separated)</FormLabel>
+                    <FormLabel className="text-white">Features (comma-separated)</FormLabel>
                     <FormControl>
                       <Textarea
                         value={featuresInput}
@@ -305,6 +306,7 @@ export default function ProjectsPage() {
                         rows={2}
                         placeholder="e.g. Authentication, Responsive Design, API Integration"
                         data-testid="input-features"
+                        className="text-white"
                       />
                     </FormControl>
                     <FormMessage />
@@ -317,7 +319,7 @@ export default function ProjectsPage() {
                 name="techfield"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Area of Expertise</FormLabel>
+                    <FormLabel className="text-white">Area of Expertise</FormLabel>
                     <FormControl>
                       <select
                         {...field}
@@ -327,7 +329,7 @@ export default function ProjectsPage() {
                       >
                         <option value="">Select area</option>
                         {expertiseList.map((exp) => (
-                          <option key={exp.id} value={exp.id}>
+                          <option key={exp.id} value={exp.id} className="text-white">
                             {exp.title}
                           </option>
                         ))}
@@ -344,9 +346,9 @@ export default function ProjectsPage() {
                   name="liveUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Live URL (optional)</FormLabel>
+                      <FormLabel className="text-white">Live URL (optional)</FormLabel>
                       <FormControl>
-                        <Input {...field} data-testid="input-live-url" />
+                        <Input {...field} data-testid="input-live-url" className="text-white"/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -358,9 +360,9 @@ export default function ProjectsPage() {
                   name="githubUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>GitHub URL (optional)</FormLabel>
+                      <FormLabel className="text-white">GitHub URL (optional)</FormLabel>
                       <FormControl>
-                        <Input {...field} data-testid="input-github-url" />
+                        <Input {...field} data-testid="input-github-url" className="text-white"/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -373,13 +375,14 @@ export default function ProjectsPage() {
                 name="order"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Order</FormLabel>
+                    <FormLabel className="text-white">Order</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         {...field}
                         onChange={(e) => field.onChange(parseInt(e.target.value))}
                         data-testid="input-order"
+                        className="text-white"
                       />
                     </FormControl>
                     <FormMessage />
@@ -392,6 +395,7 @@ export default function ProjectsPage() {
                   type="button"
                   variant="outline"
                   onClick={() => setIsDialogOpen(false)}
+                  className="text-white"
                 >
                   Cancel
                 </Button>

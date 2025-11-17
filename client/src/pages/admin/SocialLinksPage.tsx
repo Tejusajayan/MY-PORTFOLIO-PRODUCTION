@@ -98,10 +98,10 @@ export default function SocialLinksPage() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 bg-black">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-display font-bold" data-testid="text-page-title">Social Links</h1>
+            <h1 className="text-4xl font-display font-bold text-white" data-testid="text-page-title">Social Links</h1>
             <p className="text-muted-foreground mt-2">Manage your social media profiles</p>
           </div>
           <Button
@@ -177,9 +177,9 @@ export default function SocialLinksPage() {
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl bg-black">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-white">
               {editingLink ? "Edit Social Link" : "Add Social Link"}
             </DialogTitle>
           </DialogHeader>
@@ -191,9 +191,9 @@ export default function SocialLinksPage() {
                 name="platform"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Platform</FormLabel>
+                    <FormLabel className="text-white">Platform</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="GitHub" data-testid="input-platform" />
+                      <Input {...field} placeholder="GitHub" data-testid="input-platform" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -205,9 +205,9 @@ export default function SocialLinksPage() {
                 name="url"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>URL</FormLabel>
+                    <FormLabel className="text-white">URL</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="https://github.com/username" data-testid="input-url" />
+                      <Input {...field} placeholder="https://github.com/username" data-testid="input-url" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -219,9 +219,9 @@ export default function SocialLinksPage() {
                 name="icon"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Icon (github, linkedin, twitter, instagram)</FormLabel>
+                    <FormLabel className="text-white">Icon (github, linkedin, twitter, instagram)</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="github" data-testid="input-icon" />
+                      <Input {...field} placeholder="github" data-testid="input-icon" className="text-white"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -233,13 +233,14 @@ export default function SocialLinksPage() {
                 name="order"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Order</FormLabel>
+                    <FormLabel className="text-white">Order</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         {...field}
                         onChange={(e) => field.onChange(parseInt(e.target.value))}
                         data-testid="input-order"
+                        className="text-white"
                       />
                     </FormControl>
                     <FormMessage />
@@ -252,6 +253,7 @@ export default function SocialLinksPage() {
                   type="button"
                   variant="outline"
                   onClick={() => setIsDialogOpen(false)}
+                  className="text-white"
                 >
                   Cancel
                 </Button>

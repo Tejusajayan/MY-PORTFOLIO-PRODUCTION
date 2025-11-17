@@ -63,7 +63,7 @@ export function ServicesSection({ expertise = [] }: ServicesSectionProps) {
   };
 
   return (
-    <section id="services" ref={sectionRef} className="py-24 md:py-32 relative overflow-x-hidden">
+    <section id="services" ref={sectionRef} className="py-24 md:py-32 relative overflow-x-hidden bg-black">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 relative z-10">
         <div 
           className={`mb-16 transition-all duration-1000 ${
@@ -71,7 +71,7 @@ export function ServicesSection({ expertise = [] }: ServicesSectionProps) {
           }`}
         >
           <span className="text-sm font-medium text-primary tracking-widest uppercase">What I Do</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">
             SERVICES
           </h2>
         </div>

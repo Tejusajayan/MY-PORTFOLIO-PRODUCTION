@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Cpu, Cloud, FileCode, Bot, Code, Palette, Rocket, Zap, BrickWallFire, AppWindow } from "lucide-react";
+import { Cpu, Cloud, FileCode, Bot, Code, Palette, Rocket, Zap, GlobeLock, AppWindow } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import type { Expertise } from "@shared/schema";
 
@@ -57,8 +57,8 @@ export function ServicesSection({ expertise = [] }: ServicesSectionProps) {
         return Rocket;
       case "zap":
         return Zap;
-      case "brick-wall-fire":
-        return BrickWallFire;
+      case "globe-lock":
+        return GlobeLock;
       case "app-window":
         return AppWindow;
       case "bot":

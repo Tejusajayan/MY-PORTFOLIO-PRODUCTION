@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Code, Palette, Rocket, Zap } from "lucide-react";
+import { Cpu, Cloud, FileCode, Bot, Code, Palette, Rocket, Zap, BrickWallFire, AppWindow } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import type { Expertise } from "@shared/schema";
 
@@ -57,13 +57,25 @@ export function ServicesSection({ expertise = [] }: ServicesSectionProps) {
         return Rocket;
       case "zap":
         return Zap;
+      case "brick-wall-fire":
+        return BrickWallFire;
+      case "app-window":
+        return AppWindow;
+      case "bot":
+        return Bot;
+      case "file-code":
+        return FileCode;
+      case "cloud":
+        return Cloud;
+      case "cpu":
+        return Cpu;
       default:
         return Code;
     }
   };
 
   return (
-    <section id="services" ref={sectionRef} className="py-24 md:py-32 relative overflow-x-hidden bg-black">
+    <section id="services" ref={sectionRef} className="py-24 md:py-32 relative overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 relative z-10">
         <div 
           className={`mb-16 transition-all duration-1000 ${
@@ -71,7 +83,7 @@ export function ServicesSection({ expertise = [] }: ServicesSectionProps) {
           }`}
         >
           <span className="text-sm font-medium text-primary tracking-widest uppercase">What I Do</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
             SERVICES
           </h2>
         </div>

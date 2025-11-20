@@ -14,6 +14,11 @@ interface ProjectModalProps {
 export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
   if (!project) return null;
 
+  function getAbsoluteUrl(url: string) {
+    if (/^https?:\/\//i.test(url)) return url;
+    return `https://${url}`;
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[85vh] p-0 overflow-hidden bg-black" data-testid="modal-project-details">
@@ -93,7 +98,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                     data-testid="button-view-live"
                     className="bg-primary text-white"
                   >
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={getAbsoluteUrl(project.liveUrl)} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2 text-white" />
                       View Live Site
                     </a>

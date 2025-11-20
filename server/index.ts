@@ -8,7 +8,7 @@ import cors from "cors";
 const app = express();
 
 app.use(cors({
-    origin: 'https://31.97.229.142', // change to your domain in production for security
+    origin: 'https://tjfolio.online', // change to your domain in production for security
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }));

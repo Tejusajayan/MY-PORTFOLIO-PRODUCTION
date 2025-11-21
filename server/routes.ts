@@ -1,7 +1,7 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import {
   insertProjectSchema,
   insertExpertiseSchema,
@@ -11,6 +11,43 @@ import {
   insertSocialLinkSchema,
 } from "@shared/schema";
 import { z } from "zod";
+
+// Extend Express Request type to include user
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { id: string; username: string };
+    }
+  }
+}
+
+// JWT secret from env or fallback (should be set in production)
+const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_key";
+const JWT_EXPIRES_IN = "7d";
+
+function createJwt(user: { id: string; username: string }) {
+  return jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+}
+
+function verifyJwt(token: string) {
+  try {
+    return jwt.verify(token, JWT_SECRET) as { id: string; username: string };
+  } catch {
+    return null;
+  }
+}
+
+function requireAuth(req: Request, res: Response, next: NextFunction) {
+  const auth = req.headers.authorization;
+  if (!auth || !auth.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  const token = auth.slice(7);
+  const payload = verifyJwt(token);
+  if (!payload) return res.status(401).json({ error: "Invalid token" });
+  req.user = payload;
+  next();
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/projects", async (_req, res) => {
@@ -34,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/projects", async (req, res) => {
+  app.post("/api/projects", requireAuth, async (req, res) => {
     try {
       const data = insertProjectSchema.parse(req.body);
       const project = await storage.createProject(data);
@@ -47,7 +84,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/projects/:id", async (req, res) => {
+  app.patch("/api/projects/:id", requireAuth, async (req, res) => {
     try {
       const data = insertProjectSchema.partial().parse(req.body);
       const project = await storage.updateProject(req.params.id, data);
@@ -63,7 +100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/projects/:id", async (req, res) => {
+  app.delete("/api/projects/:id", requireAuth, async (req, res) => {
     try {
       const success = await storage.deleteProject(req.params.id);
       if (!success) {
@@ -96,7 +133,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/expertise", async (req, res) => {
+  app.post("/api/expertise", requireAuth, async (req, res) => {
     try {
       const data = insertExpertiseSchema.parse(req.body);
       const expertise = await storage.createExpertise(data);
@@ -109,7 +146,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/expertise/:id", async (req, res) => {
+  app.patch("/api/expertise/:id", requireAuth, async (req, res) => {
     try {
       const data = insertExpertiseSchema.partial().parse(req.body);
       const expertise = await storage.updateExpertise(req.params.id, data);
@@ -125,7 +162,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/expertise/:id", async (req, res) => {
+  app.delete("/api/expertise/:id", requireAuth, async (req, res) => {
     try {
       const success = await storage.deleteExpertise(req.params.id);
       if (!success) {
@@ -158,7 +195,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/testimonials", async (req, res) => {
+  app.post("/api/testimonials", requireAuth, async (req, res) => {
     try {
       const data = insertTestimonialSchema.parse(req.body);
       const testimonial = await storage.createTestimonial(data);
@@ -171,7 +208,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/testimonials/:id", async (req, res) => {
+  app.patch("/api/testimonials/:id", requireAuth, async (req, res) => {
     try {
       const data = insertTestimonialSchema.partial().parse(req.body);
       const testimonial = await storage.updateTestimonial(req.params.id, data);
@@ -187,7 +224,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/testimonials/:id", async (req, res) => {
+  app.delete("/api/testimonials/:id", requireAuth, async (req, res) => {
     try {
       const success = await storage.deleteTestimonial(req.params.id);
       if (!success) {
@@ -199,7 +236,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/contacts", async (_req, res) => {
+  app.get("/api/contacts", requireAuth, async (_req, res) => {
     try {
       const contacts = await storage.getAllContacts();
       res.json(contacts);
@@ -208,7 +245,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/contacts/:id", async (req, res) => {
+  app.get("/api/contacts/:id", requireAuth, async (req, res) => {
     try {
       const contact = await storage.getContact(req.params.id);
       if (!contact) {
@@ -234,7 +271,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // PATCH /api/contacts/:id/read for marking as read
-  app.patch("/api/contacts/:id/read", async (req, res) => {
+  app.patch("/api/contacts/:id/read", requireAuth, async (req, res) => {
     try {
       const contact = await storage.updateContact(req.params.id, { read: true });
       if (!contact) {
@@ -246,7 +283,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/contacts/:id", async (req, res) => {
+  app.delete("/api/contacts/:id", requireAuth, async (req, res) => {
     try {
       const success = await storage.deleteContact(req.params.id);
       if (!success) {
@@ -279,7 +316,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/social-links", async (req, res) => {
+  app.post("/api/social-links", requireAuth, async (req, res) => {
     try {
       const data = insertSocialLinkSchema.parse(req.body);
       const link = await storage.createSocialLink(data);
@@ -292,7 +329,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/social-links/:id", async (req, res) => {
+  app.patch("/api/social-links/:id", requireAuth, async (req, res) => {
     try {
       const data = insertSocialLinkSchema.partial().parse(req.body);
       const link = await storage.updateSocialLink(req.params.id, data);
@@ -308,7 +345,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/social-links/:id", async (req, res) => {
+  app.delete("/api/social-links/:id", requireAuth, async (req, res) => {
     try {
       const success = await storage.deleteSocialLink(req.params.id);
       if (!success) {
@@ -331,8 +368,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-    // Set a simple token (for demo, use JWT in production)
-    res.json({ token: "admin_token" });
+    const token = createJwt({ id: user.id, username: user.username });
+    res.json({ token });
+  });
+
+  app.get("/api/me", requireAuth, async (req, res) => {
+    res.json({ id: req.user!.id, username: req.user!.username });
   });
 
   app.post("/api/register", async (req, res) => {
@@ -357,8 +398,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Add this route if you want to support server-side logout (optional)
   app.post("/api/logout", (_req, res) => {
-    // For stateless JWT/localStorage, nothing to do here.
-    // For session-based auth, destroy the session here.
+    // JWT is stateless, nothing to do
     res.status(204).send();
   });
 

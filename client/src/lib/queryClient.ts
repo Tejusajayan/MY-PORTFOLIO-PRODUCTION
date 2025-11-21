@@ -12,12 +12,21 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
+  const token = localStorage.getItem("admin_token");
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers: {
+      ...(data ? { "Content-Type": "application/json" } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
+
+  // Clear invalid tokens on 401
+  if (res.status === 401) {
+    localStorage.removeItem("admin_token");
+  }
 
   await throwIfResNotOk(res);
   return res;
@@ -28,18 +37,25 @@ export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
-  async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
-      credentials: "include",
-    });
+    async ({ queryKey }) => {
+      const token = localStorage.getItem("admin_token");
+      const res = await fetch(queryKey.join("/") as string, {
+        credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
 
-    if (unauthorizedBehavior === "returnNull" && res.status === 401) {
-      return null;
-    }
+      if (res.status === 401) {
+        // Clear invalid token
+        localStorage.removeItem("admin_token");
 
-    await throwIfResNotOk(res);
-    return await res.json();
-  };
+        if (unauthorizedBehavior === "returnNull") {
+          return null;
+        }
+      }
+
+      await throwIfResNotOk(res);
+      return await res.json();
+    };
 
 export const queryClient = new QueryClient({
   defaultOptions: {

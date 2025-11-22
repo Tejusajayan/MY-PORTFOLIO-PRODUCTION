@@ -11,7 +11,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ 
   name = "TEJUS",
-  title = "Tech Specialist",
+  title = "Tech Developer",
   bio = "Delivering automation & full-stack solutions, IT support, with a strong focus on seamless user experiences. Showcasing diverse expertise across web development, cybersecurity, system administration, and workflow automation to help businesses operate smarter, secure and faster."
 }: HeroSectionProps) {
   const [isVisible, setIsVisible] = useState(false);

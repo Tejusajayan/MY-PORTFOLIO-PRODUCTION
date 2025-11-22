@@ -8,7 +8,7 @@ interface AboutSectionProps {
 }
 
 export function AboutSection({ 
-  name = "Sanches",
+  name = "Tejus",
   bio = "Driven by curiosity and a strong passion for problem-solving, I work across web development, IT solutions, and workflow automation. I enjoy creating smooth, efficient digital experiences — whether it’s building a full-stack application, optimizing systems, or automating everyday processes. Through this portfolio, I share my work, my process, and the skills that shape my journey as a growing tech professional.",
   location = "Dubai, UAE"
 }: AboutSectionProps) {
@@ -60,7 +60,7 @@ export function AboutSection({
                   PROFESSIONAL
                 </span ><br />
                 JOURNEY OF A<br />
-                TECH SPECIALIST.
+                TECH DEVELOPER.
               </h2>
             </div>
 

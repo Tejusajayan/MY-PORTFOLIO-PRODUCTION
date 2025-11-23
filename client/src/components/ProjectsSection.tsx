@@ -46,6 +46,11 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
     queryKey: ["/api/expertise"],
   });
 
+  // Filter expertise to only show those with projects
+  const expertiseWithProjects = expertiseList.filter((exp) =>
+    projects.some((p) => p.techfield === exp.id)
+  );
+
   // Filter projects for modal
   const filteredProjects = selectedTechfield
     ? projects.filter((p) => p.techfield === selectedTechfield)
@@ -106,7 +111,7 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
   ];
 
   return (
-    <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden bg-black">
+    <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -119,14 +124,13 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div 
-          className={`mb-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+        <div
+          className={`mb-16 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
         >
           <span className="text-sm font-medium text-primary tracking-widest uppercase">Portfolio</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white text-white">
-            MY WORKS
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
+            SELECTED WORKS
           </h2>
         </div>
 
@@ -136,9 +140,8 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
               key={project.id}
               data-testid={`card-project-${index}`}
               onClick={() => onProjectClick(project)}
-              className={`group hover-elevate cursor-pointer transition-all duration-700 delay-${index * 100} ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              }`}
+              className={`group hover-elevate cursor-pointer transition-all duration-700 delay-${index * 100} ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                }`}
             >
               <div className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="flex items-start gap-6 flex-1">
@@ -194,25 +197,25 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
 
       {/* Modal for all projects by expertise */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-4xl w-full max-h-[80vh] p-0 bg-black">
-          <div className="p-6 pb-0">
-            <h2 className="text-2xl font-bold mb-4 text-white">Projects by Area of Expertise</h2>
+        <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-3xl lg:max-w-4xl w-full max-h-[85vh] sm:max-h-[80vh] p-0">
+          <div className="p-4 sm:p-6 pb-0">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Projects by Area of Expertise</h2>
             <Tabs
-              value={selectedTechfield || (expertiseList[0]?.id ?? "")}
+              value={selectedTechfield || (expertiseWithProjects[0]?.id ?? "")}
               onValueChange={setSelectedTechfield}
               className="w-full"
             >
-              <TabsList className="flex gap-2 overflow-x-auto mb-6">
-                {expertiseList.map((exp) => (
+              <TabsList className="flex gap-2 overflow-x-auto mb-4 sm:mb-6 w-full justify-start">
+                {expertiseWithProjects.map((exp) => (
                   <TabsTrigger key={exp.id} value={exp.id} className="whitespace-nowrap">
                     {exp.title}
                   </TabsTrigger>
                 ))}
               </TabsList>
-              <ScrollArea className="h-[50vh] pr-2">
-                {expertiseList.map((exp) => (
+              <ScrollArea className="h-[55vh] sm:h-[50vh] pr-2 sm:pr-4">
+                {expertiseWithProjects.map((exp) => (
                   <TabsContent key={exp.id} value={exp.id} className="w-full">
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       {projects.filter((p) => p.techfield === exp.id).map((project, idx) => (
                         <Card
                           key={project.id}
@@ -220,9 +223,9 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
                           onClick={() => onProjectClick(project)}
                           className="group hover-elevate cursor-pointer transition-all"
                         >
-                          <div className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                            <div className="flex items-start gap-6 flex-1">
-                              <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 bg-card border border-card-border">
+                          <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
+                            <div className="flex items-start gap-3 sm:gap-6 flex-1 w-full">
+                              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 bg-card border border-card-border">
                                 <img
                                   src={project.image}
                                   alt={project.title}
@@ -230,10 +233,10 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
                                 />
                               </div>
                               <div className="flex-1 min-w-0">
-                                <h3 className="text-xl md:text-2xl font-display font-semibold mb-2 group-hover:text-primary transition-colors">
+                                <h3 className="text-base sm:text-lg md:text-xl font-display font-semibold mb-1 sm:mb-2 group-hover:text-primary transition-colors">
                                   {project.title}
                                 </h3>
-                                <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                                <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 line-clamp-2">
                                   {project.description}
                                 </p>
                                 <div className="flex flex-wrap gap-2">
@@ -252,18 +255,13 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="flex-shrink-0"
+                              className="flex-shrink-0 self-start sm:self-center"
                             >
-                              <ArrowUpRight className="h-5 w-5" />
+                              <ArrowUpRight className="h-4 w-4 sm:h-5 sm:w-5" />
                             </Button>
                           </div>
                         </Card>
                       ))}
-                      {projects.filter((p) => p.techfield === exp.id).length === 0 && (
-                        <div className="text-center text-muted-foreground col-span-2 py-8">
-                          No projects for this area yet.
-                        </div>
-                      )}
                     </div>
                   </TabsContent>
                 ))}

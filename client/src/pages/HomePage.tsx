@@ -46,7 +46,7 @@ export default function HomePage() {
         body: JSON.stringify(data),
       });
       if (response.ok) {
-        toast({ title: "Message sent successfully!" });
+        toast({ title: "Thank You For Contacting Me Will Be In Touch Soon!!" });
       } else {
         toast({ title: "Failed to send message", variant: "destructive" });
       }

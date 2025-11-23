@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { Check, Mail, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,6 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { AdminLayout } from "./AdminLayout";
 import type { Contact } from "@shared/schema";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -18,6 +26,8 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function MessagesPage() {
   const { toast } = useToast();
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { data: contacts = [], isLoading } = useQuery<Contact[]>({
     queryKey: ["/api/contacts"],
@@ -33,15 +43,28 @@ export default function MessagesPage() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => apiRequest("DELETE", `/api/contacts/${id}`, null),
-    onSuccess: () => {
+    onSuccess: (_data, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ["/api/contacts"] });
       toast({ title: "Message deleted successfully" });
+      if (selectedContact && selectedContact.id === deletedId) {
+        setIsDialogOpen(false);
+        setSelectedContact(null);
+      }
     },
   });
 
+  const handleRowClick = (contact: Contact) => {
+    setSelectedContact(contact);
+    setIsDialogOpen(true);
+  };
+
+  const handleActionClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
     <AdminLayout>
-      <div className="space-y-6 bg-black">
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-display font-bold text-white" data-testid="text-page-title">Messages</h1>
@@ -79,7 +102,12 @@ export default function MessagesPage() {
                 </TableRow>
               ) : (
                 contacts.map((contact, index) => (
-                  <TableRow key={contact.id} data-testid={`row-message-${index}`}>
+                  <TableRow
+                    key={contact.id}
+                    data-testid={`row-message-${index}`}
+                    onClick={() => handleRowClick(contact)}
+                    className="cursor-pointer hover:bg-muted/50 transition-colors"
+                  >
                     <TableCell>
                       {contact.read ? (
                         <Badge variant="outline">Read</Badge>
@@ -92,7 +120,7 @@ export default function MessagesPage() {
                     <TableCell>{contact.subject}</TableCell>
                     <TableCell className="max-w-xs truncate">{contact.message}</TableCell>
                     <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
+                      <div className="flex justify-end gap-2" onClick={handleActionClick}>
                         {!contact.read && (
                           <Button
                             size="icon"
@@ -120,6 +148,95 @@ export default function MessagesPage() {
           </Table>
         </Card>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto bg-black">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-display text-white">Message Details</DialogTitle>
+            <DialogDescription>
+              Complete information from the contact form submission
+            </DialogDescription>
+          </DialogHeader>
+
+          {selectedContact && (
+            <div className="space-y-6 mt-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-muted-foreground">Status</label>
+                  <div>
+                    {selectedContact.read ? (
+                      <Badge variant="outline" className="text-white">Read</Badge>
+                    ) : (
+                      <Badge>Unread</Badge>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-muted-foreground">Date</label>
+                  <p className="text-sm text-white">
+                    {new Date(selectedContact.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-muted-foreground">Name</label>
+                <p className="text-base text-white">{selectedContact.name}</p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-muted-foreground">Email</label>
+                <p className="text-base text-white">
+                  <a
+                    href={`mailto:${selectedContact.email}`}
+                    className="text-primary hover:underline"
+                  >
+                    {selectedContact.email}
+                  </a>
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-muted-foreground">Subject</label>
+                <p className="text-base text-white">{selectedContact.subject}</p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-muted-foreground">Message</label>
+                <div className="bg-muted/50 p-4 rounded-lg border">
+                  <p className="text-base whitespace-pre-wrap break-words text-white">
+                    {selectedContact.message}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-4 border-t">
+                {!selectedContact.read && (
+                  <Button
+                    onClick={() => {
+                      markReadMutation.mutate(selectedContact.id);
+                    }}
+                    variant="outline"
+                  >
+                    <Check className="h-4 w-4 mr-2" />
+                    Mark as Read
+                  </Button>
+                )}
+                <Button
+                  onClick={() => {
+                    deleteMutation.mutate(selectedContact.id);
+                  }}
+                  variant="destructive"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete Message
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </AdminLayout>
   );
 }

@@ -12,6 +12,7 @@ import realEstate from "@assets/generated_images/Project_screenshot_real_estate_
 import courseApp from "@assets/generated_images/Project_screenshot_course_app_f47228e1.png";
 import creativeStudio from "@assets/generated_images/Project_screenshot_creative_studio_d9eb9c41.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useResponsiveValue } from "@/hooks/use-responsive";
 
 interface ProjectsSectionProps {
   projects?: Project[];
@@ -111,7 +112,7 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
   ];
 
   return (
-    <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden">
+    <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden bg-black">
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -129,7 +130,7 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
             }`}
         >
           <span className="text-sm font-medium text-primary tracking-widest uppercase">Portfolio</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">
             SELECTED WORKS
           </h2>
         </div>
@@ -197,25 +198,129 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
 
       {/* Modal for all projects by expertise */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-3xl lg:max-w-4xl w-full max-h-[85vh] sm:max-h-[80vh] p-0">
-          <div className="p-4 sm:p-6 pb-0">
-            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Projects by Area of Expertise</h2>
+        <DialogContent
+          style={{
+            width: 'calc(100vw - 2rem)',
+            maxWidth: '896px',
+            maxHeight: '90vh',
+            padding: 0,
+            overflow: 'auto',
+            overflowX: 'hidden',
+            background: 'black'
+          }}
+          className=""
+        >
+          <style>{`
+            @media (min-width: 640px) {
+              .modal-content-responsive {
+                width: 90vw !important;
+                max-height: 85vh !important;
+              }
+              .modal-inner-padding {
+                padding: 1rem !important;
+              }
+              .modal-title {
+                font-size: 1.25rem !important;
+                margin-bottom: 0.75rem !important;
+              }
+              .modal-tabs-gap {
+                gap: 0.5rem !important;
+                margin-bottom: 1rem !important;
+              }
+              .modal-tab-trigger {
+                font-size: 0.875rem !important;
+              }
+              .modal-scroll-area {
+                height: 55vh !important;
+                padding-right: 0.5rem !important;
+              }
+              .modal-grid {
+                gap: 1.5rem !important;
+              }
+              .modal-card-padding {
+                padding: 1.5rem !important;
+              }
+              .modal-card-gap {
+                gap: 1.5rem !important;
+              }
+              .modal-image {
+                width: 4rem !important;
+                height: 4rem !important;
+              }
+              .modal-title-text {
+                font-size: 1.125rem !important;
+                margin-bottom: 0.5rem !important;
+              }
+              .modal-desc-text {
+                font-size: 0.875rem !important;
+                margin-bottom: 0.75rem !important;
+              }
+              .modal-card-flex {
+                flex-direction: row !important;
+                align-items: center !important;
+              }
+              .modal-button-align {
+                align-self: center !important;
+              }
+              .modal-icon-size {
+                width: 1.25rem !important;
+                height: 1.25rem !important;
+              }
+            }
+            @media (min-width: 768px) {
+              .modal-content-responsive {
+                width: 85vw !important;
+                max-height: 80vh !important;
+              }
+              .modal-inner-padding {
+                padding: 1.5rem !important;
+              }
+              .modal-title {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
+              }
+              .modal-tabs-gap {
+                margin-bottom: 1.5rem !important;
+              }
+              .modal-scroll-area {
+                height: 50vh !important;
+                padding-right: 1rem !important;
+              }
+              .modal-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+              }
+              .modal-image {
+                width: 5rem !important;
+                height: 5rem !important;
+              }
+              .modal-title-text {
+                font-size: 1.25rem !important;
+              }
+            }
+            @media (min-width: 1024px) {
+              .modal-content-responsive {
+                width: 80vw !important;
+              }
+            }
+          `}</style>
+          <div className="modal-content-responsive modal-inner-padding" style={{ padding: '0.75rem', paddingBottom: 0, maxWidth: '100%', overflowX: 'hidden' }}>
+            <h2 className="modal-title font-bold" style={{ fontSize: '1.125rem', marginBottom: '0.5rem', paddingRight: '2rem' }}>Projects by Area of Expertise</h2>
             <Tabs
               value={selectedTechfield || (expertiseWithProjects[0]?.id ?? "")}
               onValueChange={setSelectedTechfield}
-              className="w-full"
+              style={{ width: '100%' }}
             >
-              <TabsList className="flex gap-2 overflow-x-auto mb-4 sm:mb-6 w-full justify-start">
+              <TabsList className="modal-tabs-gap" style={{ display: 'flex', gap: '0.25rem', overflowX: 'auto', marginBottom: '0.75rem', width: '100%', justifyContent: 'flex-start', maxWidth: '100%' }}>
                 {expertiseWithProjects.map((exp) => (
-                  <TabsTrigger key={exp.id} value={exp.id} className="whitespace-nowrap">
+                  <TabsTrigger key={exp.id} value={exp.id} className="modal-tab-trigger" style={{ whiteSpace: 'nowrap', fontSize: '0.75rem' }}>
                     {exp.title}
                   </TabsTrigger>
                 ))}
               </TabsList>
-              <ScrollArea className="h-[55vh] sm:h-[50vh] pr-2 sm:pr-4">
+              <ScrollArea className="modal-scroll-area" style={{ height: '60vh', paddingRight: '0.25rem' }}>
                 {expertiseWithProjects.map((exp) => (
-                  <TabsContent key={exp.id} value={exp.id} className="w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                  <TabsContent key={exp.id} value={exp.id} style={{ width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
+                    <div className="modal-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', maxWidth: '100%' }}>
                       {projects.filter((p) => p.techfield === exp.id).map((project, idx) => (
                         <Card
                           key={project.id}
@@ -223,28 +328,28 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
                           onClick={() => onProjectClick(project)}
                           className="group hover-elevate cursor-pointer transition-all"
                         >
-                          <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
-                            <div className="flex items-start gap-3 sm:gap-6 flex-1 w-full">
-                              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 bg-card border border-card-border">
+                          <div className="modal-card-padding modal-card-flex modal-card-gap" style={{ padding: '1rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', flex: 1, width: '100%' }}>
+                              <div className="modal-image" style={{ width: '3.5rem', height: '3.5rem', borderRadius: '0.5rem', overflow: 'hidden', flexShrink: 0 }}>
                                 <img
                                   src={project.image}
                                   alt={project.title}
-                                  className="w-full h-full object-cover"
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
                               </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="text-base sm:text-lg md:text-xl font-display font-semibold mb-1 sm:mb-2 group-hover:text-primary transition-colors">
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <h3 className="modal-title-text font-display font-semibold group-hover:text-primary transition-colors" style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>
                                   {project.title}
                                 </h3>
-                                <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 line-clamp-2">
+                                <p className="modal-desc-text text-muted-foreground line-clamp-2" style={{ fontSize: '0.75rem', marginBottom: '0.5rem' }}>
                                   {project.description}
                                 </p>
-                                <div className="flex flex-wrap gap-2">
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                                   {project.techStack.slice(0, 3).map((tech, techIndex) => (
                                     <Badge
                                       key={techIndex}
                                       variant="secondary"
-                                      className="text-xs"
+                                      style={{ fontSize: '0.75rem' }}
                                     >
                                       {tech}
                                     </Badge>
@@ -255,9 +360,10 @@ export function ProjectsSection({ projects = [], onProjectClick }: ProjectsSecti
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="flex-shrink-0 self-start sm:self-center"
+                              className="modal-button-align"
+                              style={{ flexShrink: 0, alignSelf: 'flex-start' }}
                             >
-                              <ArrowUpRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                              <ArrowUpRight className="modal-icon-size" style={{ width: '1rem', height: '1rem' }} />
                             </Button>
                           </div>
                         </Card>
